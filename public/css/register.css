@@ -1,0 +1,78 @@
+
+/* 
+    Глобальные настроки
+*/
+* {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+
+a {
+    text-decoration: none;
+    color: #000;
+
+}
+
+li {
+    list-style-type: none;
+    display: inline;
+}
+
+div h3 {
+    margin-top: 5px;
+}
+
+div ul {
+    margin-top: 14px;
+}
+
+ul li {
+    padding-right: 10px;
+}
+
+/*
+    настройки части с контентом
+*/
+
+.main-fluid {
+    background-color: #FEEFE9;
+}
+
+.main-container {
+    background-color: white;
+    padding-top: 70px;
+    padding-bottom: 88px;
+}
+
+.main-container .row {
+}
+
+label {
+    margin-top: 10px;
+}
+
+#register-input  {
+    width:  75%;
+    height: 40px;
+    border: none;
+    border-bottom: 1px solid green;
+}
+
+#submit-input {
+    height: 40px;
+    width: 75%;
+    margin: 20px 0;
+    border: none;
+}
+
+#error-msg-p {
+    width: 75%;
+    padding: 10px 0;
+    text-align: center;
+    border: 1px solid black;
+}
+
+p a {
+    color: cadetblue;
+}

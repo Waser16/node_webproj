@@ -1,0 +1,64 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="/styles/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/header.css" type="text/css">
+    <link rel="stylesheet" href="/styles/index.css" type="text/css">
+    <link rel="stylesheet" href="/styles/footer.css" type="text/css">
+    <title>Main</title>
+</head>
+
+<body>
+    <!-- ХЕДЕР -->
+    <%- include(header) %>
+
+    <!-- Основная часть сайта-->
+    <div class="main-fluid container-fluid">
+        <div class="main-container container">
+            <div class="content row">
+
+                <!-- ЧАСТЬ С НОВОСТЯМИ-->
+                <div class="content-post col-8">
+                    <h4> Последние публикации</h4>
+                    <% for(let i = 0; i < posts.length; i++) {%>
+                    <div class="post row">
+                        <div class="post-image col-2">
+                            <img class="mx-auto d-block" src="/photos/<%=posts[i].image_path%>_rr.jpg">
+                        </div>
+                        <div class="post-text col-10">
+                            <h5>
+                                <a href="post/<%=posts[i].id%>">
+                                    <%=posts[i].title%>
+                                </a>
+                            </h5>
+                            <p><%=posts[i].first_name%> <%=posts[i].last_name%> | <%=posts[i].post_date%></p>
+                        </div>
+                    </div>
+                    <%} %>
+                </div>
+
+            <!-- ВАЖНЫЕ НОВОСТИ-->
+            <div class="content-important col-4">
+                <h4>Важные новости</h4>
+                <% for (let i = 0; i < importantPosts.length; i++) {%>
+                <div class="important row">
+                    <a href="post/<%=importantPosts[i].id%>">
+                        <%=importantPosts[i].title%>
+                    </a>
+                </div>
+                <%} %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <%- include('footer') %>
+</body>
+</html>

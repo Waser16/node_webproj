@@ -1,0 +1,97 @@
+
+/* 
+    Глобальные настроки
+*/
+* {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+li {
+    list-style-type: none;
+    display: inline;
+}
+
+div h3 {
+    margin-top: 5px;
+}
+
+div ul {
+    margin-top: 14px;
+}
+
+ul li {
+    padding-right: 10px;
+}
+
+
+/*
+    Основная часть  
+*/
+
+.main-fluid {
+    background-color: #FEEFE9;
+}
+
+.main-container {
+    background-color: white;
+}
+
+.content .team-container h4 {
+    margin: 10px 0;
+}
+
+.championship-image img {
+    border: 1px solid black;
+}
+
+.team-container .team {
+    margin: 50px 0;
+    border-top: 1px solid black;
+}
+
+.team-container .team p {
+    padding: 0 0;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.team .driver {
+    padding: 0 0;
+    text-align: center;
+}
+
+.team .driver p{
+    font-weight: normal;
+    padding: 0 0;
+    text-align: center;
+    
+}
+
+
+
+
+
+/* часть с важными новостями */
+/* сайдбар с важными новостями */
+.content-important  h4 {
+    margin: 10px 0;
+}
+
+.content-important .important{
+    border-top: 1px solid red;
+    border-radius: 10px;
+    margin: 10px 0;
+    padding: 10px 0;
+}
+
+.important a {
+    padding: 0 10px;
+}
+

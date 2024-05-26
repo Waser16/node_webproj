@@ -1,0 +1,23 @@
+/*
+    Настройки хедера
+*/
+.header-fluid {
+    background-color: #331E1C;
+}
+
+.header-fluid .header-container {
+    height: 50px;
+    background-color: #331E1C;
+}
+
+.header-icon h3 a{
+    color: wheat;
+}
+
+.header-menu ul li a{
+    color: wheat;
+}
+
+header div {
+    height: inherit;
+}

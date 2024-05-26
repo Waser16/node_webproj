@@ -1,0 +1,90 @@
+
+/* 
+    Глобальные настроки
+*/
+* {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+li {
+    list-style-type: none;
+    display: inline;
+}
+
+div h3 {
+    margin-top: 5px;
+}
+
+div ul {
+    margin-top: 14px;
+}
+
+ul li {
+    padding-right: 10px;
+}
+
+
+/*
+    Основная часть  
+*/
+
+.main-fluid {
+    background-color: #FEEFE9;
+}
+
+.main-container {
+    background-color: white;
+    padding-bottom: 50px;
+}
+
+.content .content-schedule h4 {
+    margin: 10px 0;
+}
+
+img {
+    border: 1px solid black;
+}
+
+table {
+    border-top: 2px solid black;
+    margin: 10px 0;
+}
+
+table th {
+    font-weight: bold;
+    padding: 5px;
+    background: #efefef;
+    border: 1px solid #dddddd;
+    border-top: #000;
+    text-align: center;
+}
+.schedule-table td {
+    border: 1px solid #dddddd;
+    padding: 5px;
+    text-align: center;
+}
+
+
+/* сайдбар с важными новостями */
+.content-important  h4 {
+    margin: 10px 0;
+}
+
+.content-important .important{
+    border-top: 1px solid red;
+    border-radius: 10px;
+    margin: 10px 0;
+    padding: 10px 0;
+}
+
+.important a {
+    padding: 0 10px;
+}
+

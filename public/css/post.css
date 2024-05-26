@@ -1,0 +1,86 @@
+
+/* 
+    Глобальные настроки
+*/
+* {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+li {
+    list-style-type: none;
+    display: inline;
+}
+
+div h3 {
+    margin-top: 5px;
+}
+
+div ul {
+    margin-top: 14px;
+}
+
+ul li {
+    padding-right: 10px;
+}
+
+
+/*
+    настройки части с контентом
+*/
+.main-fluid {
+    background-color: #FEEFE9;
+}
+
+.main-container {
+    margin-bottom: 50px;
+    background-color: white;
+}
+
+.content-post  h4 {
+    margin: 10px 0;
+    margin-bottom: 5px;
+}
+
+.content-post  p {
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
+.content-post .post-image {
+    margin: 10px 0;
+}
+
+.content-post .post-text {
+    margin: 10px 0;
+}
+
+
+.content-post .post-text h4 {
+    margin: 10px 0;
+}
+
+
+/* сайдбар с важными новостями */
+.content-important  h4 {
+    margin: 10px 0;
+}
+
+.content-important .important{
+    border-top: 1px solid red;
+    border-radius: 10px;
+    margin: 10px 0;
+    padding: 10px 0;
+}
+
+.important a {
+    padding: 0 10px;
+}
+
+

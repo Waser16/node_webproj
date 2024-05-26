@@ -1,0 +1,33 @@
+/*
+  Футер
+*/
+
+footer {
+    background-color: #FEEFE9;
+}
+
+.footer-container {
+    background-color: #331E1C;
+}
+
+.footer-container h4 {
+    color: wheat;
+    padding-top: 10px;
+}
+
+.footer-container p {
+    color: wheat;
+    margin: 10px 0;
+}
+
+.footer-content .footer-other-series {
+    height: 200px;
+}
+
+.footer-content .footer-contacts {
+
+}
+
+.footer-content .footer-policy {
+
+}

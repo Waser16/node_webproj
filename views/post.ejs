@@ -1,0 +1,61 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="/styles/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/header.css" type="text/css">
+    <link rel="stylesheet" href="/styles/post.css" type="text/css">
+    <link rel="stylesheet" href="/styles/footer.css" type="text/css">
+    <title>Post</title>
+</head
+
+<body>
+
+    <!-- ХЕДЕР -->
+    <%- include(header)%>
+
+    <!-- Основная часть сайта-->
+    <div class="main-fluid container-fluid">
+        <div class="main-container container">
+            <div class="content row">
+
+                <!-- КОНКРЕТНАЯ НОВОСТЬ-->
+                <div class="content-post col-8">
+                    <h4><%=post[0].title%></h4>
+                    <p><%=post[0].first_name%> <%=post[0].last_name%></p>
+                    <div class="post row">
+                        <div class="post-image img-fluid">
+                            <img src="/images/<%=post[0].image_path%>_big.jpg">
+                        </div>
+                        <div class="post-text">
+                            <%-post[0].post_text%>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ВАЖНЫЕ НОВОСТИ-->
+                <div class="content-important col-4">
+                    <h4>Важные новости</h4>
+                    <% for (let i = 0; i < importantPosts.length; i++) {%>
+                    <div class="important row">
+                        <a href="post/<%=importantPosts[i].id%>">
+                            <%=importantPosts[i].title%>
+                        </a>
+                    </div>
+                    <%} %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ФООТЕР -->
+    <%- include(footer)%>
+</body>
+
+</html>

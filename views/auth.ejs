@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="/styles/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/auth.css">
+    <link rel="stylesheet" href="/styles/footer.css">
+    <title>Чемпионат</title>
+</head>
+
+<body>
+    <!-- ХЕДЕР -->
+    <%- include(header)%>
+
+    <!-- Основная часть сайта-->
+    <div class="main-fluid container-fluid">
+        <div class="main-container container">
+            <div class="row">
+                <div class="left-space col-4">
+                </div>
+                <div class="registration-form-containter col-4">
+                    <form class="registration-form" method="POST" action="authorization_check.php">
+                        <label>Логин</label><br>
+                        <input class="register-input" name='email' type="text" placeholder="example@mail.ru"><br>
+                        <label>Пароль</label><br>
+                        <input class="register-input" name='password' type="password" placeholder="Ваш пароль"><br>
+                        <input class="submit-input" type="submit" value="Войти">
+                        <p>
+                            Нет аккаунта? <a href="/register">Регистрация</a>
+                        </p>
+                    </form>
+                </div>
+                <div class="right-space col-4">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ФУТЕР -->
+    <%- include(footer)%>
+</body>
+
+</html>
