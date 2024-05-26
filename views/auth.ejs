@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/styles/header.css">
     <link rel="stylesheet" href="/styles/auth.css">
     <link rel="stylesheet" href="/styles/footer.css">
+    <script type="text/javascript" src="jq.js"></script>
+    <script type="text/javascript" src="auth.js"></script>
     <title>Чемпионат</title>
 </head>
 
@@ -25,16 +27,19 @@
                 <div class="left-space col-4">
                 </div>
                 <div class="registration-form-containter col-4">
-                    <form class="registration-form" method="POST" action="authorization_check.php">
-                        <label>Логин</label><br>
+                    <form class="registration-form">
+                        <label>Email</label><br>
                         <input class="register-input" name='email' type="text" placeholder="example@mail.ru"><br>
                         <label>Пароль</label><br>
                         <input class="register-input" name='password' type="password" placeholder="Ваш пароль"><br>
-                        <input class="submit-input" type="submit" value="Войти">
+                        <input class="submit-input" type="button" value="Войти">
                         <p>
                             Нет аккаунта? <a href="/register">Регистрация</a>
                         </p>
                     </form>
+                    <div class="ajax-status">
+
+                    </div>
                 </div>
                 <div class="right-space col-4">
                 </div>

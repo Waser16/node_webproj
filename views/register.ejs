@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/styles/header.css" type="text/css">
     <link rel="stylesheet" href="/styles/register.css" type="text/css">
     <link rel="stylesheet" href="/styles/footer.css" type="text/css">
+    <script type="text/javascript" src="jq.js"></script>
+    <script type="text/javascript" src="register.js"></script>
     <title>Регистрация</title>
 </head>
 
@@ -25,27 +27,27 @@
                 <div class="left-space col-4">
                 </div>
                 <div class="registration-form-containter col-4">
-                    <form class="registration-form" method="POST" action="registration_check.php">
+                    <h4>Форма для регистрации</h4>
+
+                    <form class="registration-form">
                         <label>Фамилия</label><br>
-                        <input id="register-input" name='last-name' type="text  " placeholder="Иванов" required><br>
+                        <input class="register-input" name='last-name' type="text" placeholder="Иванов" required><br>
                         <label>Имя</label><br>
-                        <input id="register-input" name='first-name' type="text" placeholder="Иван" required><br>
+                        <input class="register-input" name='first-name' type="text" placeholder="Иван" required><br>
                         <label>Логин</label><br>
-                        <input id="register-input" name='login' type="text" placeholder="Никнейм" required><br>
+                        <input class="register-input" name='login' type="text" placeholder="Никнейм" required><br>
                         <label>Электронная почта</label><br>
-                        <input id="register-input" name='email' type="text" placeholder="example@mail.ru" required><br>
+                        <input class="register-input" name='email' type="text" placeholder="example@mail.ru" required><br>
                         <label>Пароль</label><br>
-                        <input id="register-input" name='password' type="password" placeholder="Введите пароль" required><br>
+                        <input class="register-input" name='password' type="password" placeholder="Введите пароль" required><br>
                         <label>Подтверждение пароля</label><br>
-                        <input id="register-input" name='password-check' type="password" placeholder="Подтвердите пароль" required><br>
-                        <input id="submit-input" type="submit" value="Зарегистрироваться">
-                        <?php
-                            if ($_SESSION['error_msg']) {
-                                echo "<p id='error-msg-p'>" . $_SESSION['error_msg'] . "</p>";
-                            }
-                            unset($_SESSION["error_msg"]);
-                        ?>
+                        <input class="register-input" name='password-check' type="password" placeholder="Подтвердите пароль" required><br>
+                        <input class="submit-input" type="button" value="Зарегистрироваться">
                     </form>
+                    <div class="ajax-status">
+                        <p> </p>
+                        <a href="/" id="ajax-success-btn"><button class="submit-input">На главную</button></a>
+                    </div>
                 </div>
                 <div class="right-space col-4">
                 </div>

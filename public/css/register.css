@@ -52,14 +52,14 @@ label {
     margin-top: 10px;
 }
 
-#register-input  {
+.register-input  {
     width:  75%;
     height: 40px;
     border: none;
     border-bottom: 1px solid green;
 }
 
-#submit-input {
+.submit-input {
     height: 40px;
     width: 75%;
     margin: 20px 0;
@@ -71,6 +71,10 @@ label {
     padding: 10px 0;
     text-align: center;
     border: 1px solid black;
+}
+
+#ajax-success-btn {
+    display: none;
 }
 
 p a {

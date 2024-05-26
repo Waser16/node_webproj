@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="/styles/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/header.css" type="text/css">
+    <link rel="stylesheet" href="/styles/admin_create.css" type="text/css">
+    <link rel="stylesheet" href="/styles/footer.css" type="text/css">
+    <script src="/jq.js" type="text/javascript"></script>
+    <script src="/admin_create.js" type="text/javascript"></script>
+    <title>Main</title>
+</head>
+
+<body>
+    <!-- ХЕДЕР -->
+    <%- include(header)%>
+
+    <!-- Основная часть сайта-->
+    <div class="main-fluid container-fluid">
+        <div class="main-container container">
+            <div class="content row">
+                <!-- часть с новостями-->
+                <div class="create col-8">
+                    <h4>Добавление статьи</h4>
+                    <form enctype="multipart/form-data">
+                        <div class='field-name row'>
+                            <div class='left-part col-2'>
+                                <p>Название:</p>
+                            </div>
+                            <div class='input-part col-10'>
+                                <textarea name="post-title" class="post-title-input" required></textarea>
+                            </div>
+                        </div>
+                        <div class='field-name row'>
+                            <div class='left-part col-2'>
+                                <p>Картинка:</p>
+                            </div>
+                            <div class='input-part col-10'>
+                                <input type="file" name="pic-path" required>
+                            </div>
+                        </div>
+                        <div class='field-name row'>
+                            <div class='left-part col-2'>
+                                <p>Статья важная?</p>
+                            </div>
+                            <div class='input-part col-10'>
+                                <input type="radio" class='post-input-radio' name='important' value='1' required>Да
+                                <input type="radio" class="post-input-radio" name='important' value='0'>Нет
+                            </div>
+                        </div>
+                        <div class='field-name row'>
+                            <div class='left-part col-2'>
+                                <p>Текст:</p>
+                            </div>
+                            <div class='input-part col-10'>
+                                <textarea class='post-text-input' name="post-text" required></textarea>
+                            </div>
+                        </div>
+                        <div class='field-name row'>
+                            <div class="left-part col-2"></div>
+                            <div class="input-part col-10">
+                                <input type="hidden" name="author_id" value="<%=userId%>">
+                                <input class="post-submit" type="button" value="Добавить статью">
+                            </div>
+                        </div>
+                    </form>
+                    <div class="hidden-div-ajax col-8" >
+                        <a href="/admin"><button class="post-submit">Назад в админ-панель</button></a>
+                    </div>
+                </div>
+
+                <!-- профиль автора-->
+                <div class="content-important col-4">
+                    <h4>Профиль</h4>
+                    <div class='important row'>
+                        <p>
+                            <%=stats[0].last_name%> <%=stats[0].first_name%> <br>
+                            Статей: <%=stats[0].cnt%> <br>
+                            Дата последней статьи: <%=stats[0].latest_post%> <br>
+                            <a href='/admin/create'><b>Добавить статью</b></a><br>
+                            <% if (position == 'админ') {%>
+                                <a href='/admin/add_staff'><b>Добавить сотрудника</b></a>
+                            <%}%>
+                        </p>
+                    </div>
+                </div>
+                <div class="important row" id="ajax-status">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ФУТЕР -->
+    <%- include(footer)%>
+</body>
+</html>
