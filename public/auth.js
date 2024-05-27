@@ -28,6 +28,7 @@ $(document).ready(function() {
                 console.log(data);
                 if (data.result.length == 1) {
                     $('.ajax-status').html('<b>Вы успешно авторизовались!</b>');
+                    window.location.assign('/');
                 }
                 else {
                     $('.ajax-status').html('<b>Неверный логин или пароль!</b>');

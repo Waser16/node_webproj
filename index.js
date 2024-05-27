@@ -5,13 +5,13 @@ let session = require('express-session');
 const mysql = require('mysql2');
 const ejs = require('ejs');
 const express = require('express');
+const url = require("node:url");
 const app = express();
 const urlParser = bodyParser.urlencoded({extended: false,});
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-app.use(bodyParser.json({extended: true, limit: '2000kb'}));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: '2000kb'}));
 app.use('/photos', express.static(path.join(__dirname, '/public/images')));
 app.use('/styles', express.static(path.join(__dirname, '/public/css')));
 app.use(express.static(path.join(__dirname, '/public')));
@@ -26,7 +26,7 @@ app.use(session({
 
 /* СТРАНИЦА АВТОРИЗАЦИИ */
 app.get('/auth', function(req, res) {
-    console.log(req.session);
+    // console.log(req.session);
     let headerPath = path.join(__dirname, '/views/header.ejs');
     let footerPath = path.join(__dirname, '/views/footer.ejs');
     let sendData = {
@@ -85,7 +85,7 @@ app.get('/register', function(req, res) {
     res.render('register.ejs', sendData);
 });
 app.put('/register', urlParser, function(req, res) {
-    console.log(req.session);
+    // console.log(req.session);
     let first_name = req.body.first_name;
     let last_name = req.body.last_name;
     let email = req.body.email;
@@ -118,7 +118,10 @@ app.put('/register', urlParser, function(req, res) {
 
 /* АДМИНКА - ГЛАВНАЯ СТРАНИЦА */
 app.get('/admin', function(req, res) {
-    console.log(req.session);
+    // console.log(req.session);
+    if (!req.session.userId) {
+        res.redirect('/');
+    }
     let postsQ = "";
     if (req.session.position == 'админ') {
         postsQ = `SELECT p.image_path, p.id, p.title, p.post_date, s.first_name, s.last_name
@@ -162,7 +165,40 @@ app.get('/admin', function(req, res) {
     })
 })
 
-/* АДМИНКА - ДОБАВЛЕНИЕ СТРАНЫ*/
+/* АДМИНКА - УДАЛЕНИЕ СТАТЬИ */
+app.delete('/admin/delete/', urlParser, function(req, res) {
+    console.log('ЗАШЕЛ в /admin/delete');
+    // console.log(req.body);
+    let id = req.body.post_id;
+    let q = `DELETE FROM posts WHERE id =?`;
+    connection.query(q, [id], function(err, result, fields) {
+        if (err) {
+            console.log(err);
+            let rawTime = new Date();
+            let time = rawTime.getFullYear() + '-' + (rawTime.getMonth() + 1) + '-' + rawTime.getDate();
+            let sendData = {
+                status_code: 0,
+                message: 'Ошибка удаления статьи!',
+                delete_time: time
+            }
+            res.status(200).json(sendData);
+        } else {
+            console.log(result);
+            let rawTime = new Date();
+            let time = rawTime.getFullYear() + '-' + (rawTime.getMonth() + 1) + '-' + rawTime.getDate();
+            let sendData = {
+                status_code: 1,
+                message: 'Статья успешно удалена!',
+                delete_time: time
+            }
+            res.status(200).json(sendData);
+            // res.status(200).redirect('/admin');
+        }
+    })
+})
+
+
+/* АДМИНКА - ДОБАВЛЕНИЕ СТАТЬИ */
 app.get('/admin/create', function(req, res) {
     let statsQ = `SELECT COUNT(*) AS cnt,
                                 MAX(post_date) as latest_post,
@@ -209,7 +245,7 @@ app.post('/admin/create', function(req, res) {
 
 /* ГЛАВНАЯ СТРАНИЦА */
 app.get('/', function(req, res) {
-    console.log(req.session);
+    // console.log(req.session);
     let sendData = {};
     let postsQ = `SELECT p.image_path, p.id, p.title,
                             p.post_date, s.first_name,
@@ -240,7 +276,7 @@ app.get('/', function(req, res) {
 /* СТРАНИЦА ОТДЕЛЬНОЙ СТАТЬИ  */
 app.get('/post/:id', function(req, res) {
     let postId = req.params.id;
-    console.log(postId);
+    // console.log(postId);
     let postQ = `SELECT p.image_path, p.id, p.title,
                             p.post_date, s.first_name,
                             s.last_name, p.post_text
@@ -269,7 +305,7 @@ app.get('/post/:id', function(req, res) {
 
 /* КАЛЕНДАРЬ ЧЕМПИОНАТА */
 app.get('/calendar', function(req, res) {
-    console.log(req.session, req.session.userId);
+    // console.log(req.session, req.session.userId);
     let importantPostsQ = 'SELECT * FROM `posts` WHERE important=1 ORDER BY `post_date` DESC LIMIT 3';
     connection.query(importantPostsQ, function (err, importantPosts, fields) {
         // console.log(post);
