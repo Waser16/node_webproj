@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="/styles/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/header.css" type="text/css">
+    <link rel="stylesheet" href="/styles/admin_staff.css" type="text/css">
+    <link rel="stylesheet" href="/styles/footer.css" type="text/css">
+    <script type="text/javascript" src="/jq.js"></script>
+    <script type="text/javascript" src="/admin_staff_delete.js"></script>
+    <title>Main</title>
+</head>
+
+<body>
+
+    <!-- ХЕДЕР -->
+    <%- include(header)%>
+
+    <!-- Основная часть сайта-->
+    <div class="main-fluid container-fluid">
+        <div class="main-container container">
+            <div class="content row">
+                <!-- часть с сотрудниками-->
+                <div class="content-staff col-8">
+                    <h4>Панель для администрации</h4>
+                    <% for(let i = 0; i < staff.length; i++) {%>
+                    <div class='staff row'>
+                        <div class='staff-data col-4'>
+                            <p>
+                                <span class='staff-name'><%=staff[i].last_name%> <%=staff[i].first_name%></span><br>
+                                <span class='staff-position'><%=staff[i].position%></span>
+                            </p>
+                        </div>
+                        <div class='staff-data col-4'>
+                            <p>
+                                <%=staff[i].login%><br>
+                                <%=staff[i].email%>
+                            </p>
+                        </div>
+                        <div class='staff-action col-2'>
+                            <p>
+                                <br><a href='admin_staff_update.php?id=<%=staff[i].id%>'>Изменить</a>
+                            </p>
+                        </div>
+                        <div class='staff-action col-2'>
+                            <br><a class='link-delete' data-id='<%=staff[i].id%>'>Удалить </a>
+                        </div>
+                    </div>
+                    <%}%>
+                </div>
+                <div class="content-important col-4">
+                    <h4>Профиль</h4>
+                    <p>
+                        <%=stats.first_name%> <%=stats.last_name%> <br>
+                        Статей: <%=stats.cnt%> <br>
+                        Дата последней статьи: <%=stats.latets_post%> <br>
+                        <a href='/admin/staff/add'><b>Добавить сотрудника</b></a>
+                    </p>
+                    <div class="important row" id="ajax-status">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ФООТЕР -->
+    <%- include(footer)%>
+
+</body>
+
+</html>

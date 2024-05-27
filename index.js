@@ -351,6 +351,65 @@ app.post('/admin/red', images.single('image'), function (req, res) {
 })
 
 
+/* АДМИНКА СТАФФА - ГЛАНАЯ */
+app.get('/admin/staff', function(req, res) {
+    // console.log(req.session);
+    if (!req.session.userId || req.session.position != 'админ') {
+        res.redirect('/admin');
+    }
+    let staffQ = "SELECT * FROM staff";
+    connection.query(staffQ, function(err, staff, fields) {
+        let statsQ = `SELECT COUNT(*) AS cnt,
+                                MAX(post_date) as latest_post,
+                                s.last_name, s.first_name
+                            FROM posts p
+                                JOIN staff s on p.author = s.id
+                            WHERE author=?`;
+        let authorId = req.session.userId;
+        connection.query(statsQ, [authorId], function(err, stats, fields) {
+            // console.log(staff, stats);
+            let headerPath = path.join(__dirname, '/views/header.ejs');
+            let footerPath = path.join(__dirname, '/views/footer.ejs');
+            let sendData = {
+                header: headerPath,
+                footer: footerPath,
+                userId: req.session.userId,
+                position: req.session.position,
+                staff: staff,
+                stats: stats[0]
+            };
+            res.status(200).render('admin_staff.ejs', sendData);
+        })
+        
+    })
+})
+
+/* АДМИНКА СТАФФА - УДАЛЕНИЕ СТАФФА */
+app.delete('/admin/staff/delete/:id', function(req, res) {
+    console.log('ЗАШЕЛ В DELETE /admin/staff/delete/:id');
+    let staffId = req.params.id;
+    console.log(staffId);
+    let q = `DELETE FROM staff WHERE id =?`;
+    connection.query(q, [staffId], function(err, result, fields) {
+        console.log(err, result);
+        if (err) {
+            console.log(err);
+            let sendData = {
+                status_code: 0,
+                message: 'Ошибка удаления сотрудника!'
+            }
+            res.status(200).json(sendData);
+        }
+        else {
+            console.log(result);
+            let sendData = {
+                status_code: 1,
+                message: 'Сотрудник успешно удален!'
+            }
+            res.status(200).json(sendData);
+        }
+    })
+})
 
 
 /* ГЛАВНАЯ СТРАНИЦА */

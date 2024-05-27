@@ -1,0 +1,93 @@
+* {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+li {
+    list-style-type: none;
+    display: inline;
+}
+
+div h3 {
+    margin-top: 5px;
+}
+
+div ul {
+    margin-top: 14px;
+}
+
+ul li {
+    padding-right: 10px;
+}
+
+p {
+    padding: 0;
+}
+
+
+/*
+    настройки части с контентом
+*/
+
+.main-fluid {
+    background-color: #FEEFE9;
+}
+
+.main-container {
+    background-color: white;
+    padding-bottom: 300px;
+}
+
+.content .content-staff {
+    border-right: 1px solid gainsboro;
+    padding: none;
+}
+
+.content-staff  h4 {
+    margin: 10px 0;
+}
+
+.content-staff .staff {
+    margin: 10px 0;
+    border: 1px solid bisque;
+    border-radius: 20px;
+
+}
+
+.staff .staff-action {
+    text-align: center;
+}
+
+.staff .staff-action a p{
+    padding: 10px 0;
+}
+
+
+
+/* профиль автора*/
+.content-important  h4 {
+    margin: 10px 0;
+}
+
+.content-important .important{
+    margin: 10px 0;
+    padding: 10px 0;
+    border-top: 5px solid #331E1C;
+}
+
+.important p {
+    margin: 0px;
+    padding: 0px;
+}
+
+
+.important p a {
+    margin-top: 20px;
+    font: bold;
+}
+
+
