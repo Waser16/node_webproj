@@ -8,6 +8,18 @@ const express = require('express');
 const url = require("node:url");
 const app = express();
 const urlParser = bodyParser.urlencoded({extended: false,});
+
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, path.join(__dirname, '/public/images'))
+    },
+    filename: function (req, file, callback) {
+        callback(null, file.originalname)
+    }
+})
+const images = multer({storage: storage});
+
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
@@ -199,7 +211,7 @@ app.delete('/admin/delete/', urlParser, function(req, res) {
 
 
 /* АДМИНКА - ДОБАВЛЕНИЕ СТАТЬИ */
-app.get('/admin/create', function(req, res) {
+app.get('/admin/create', urlParser, function(req, res) {
     let statsQ = `SELECT COUNT(*) AS cnt,
                                 MAX(post_date) as latest_post,
                                 s.last_name, s.first_name
@@ -220,24 +232,62 @@ app.get('/admin/create', function(req, res) {
         res.status(200).render('admin_create.ejs', sendData);
     })
 })
-app.post('/admin/create', function(req, res) {
-    let postTitle = req.body.post_title;
+app.post('/admin/create', images.single('image'), function(req, res) {
+
+    // console.log(req.file);
+    // console.log(req.body);
+    let title = req.body.post_title;
+    let imageName = req.file.originalname;
     let postText = req.body.post_text;
     let author = req.body.author_id;
     let important = req.body.important;
-    let picName = req.body.pic_path;
-    let rawDate = new Date()
-    let date = rawDate.getFullYear() + '-' + (rawDate.getMonth() + 1) + '-' + rawDate.getDate();
-
-    console.log(req.body, postTitle, postText, author, important, picName, date);
-
-    let q = `INSERT INTO posts (title, post_date, image_path, post_text, author,important) 
+    let rawDate = new Date();
+    let date = rawDate.getFullYear() + '-'
+        + ('0' + (rawDate.getMonth() + 1)).slice(-2) + '-'
+        + rawDate.getDate();
+    console.log(title, imageName, postText, author, important, date);
+    let q = `INSERT INTO posts (title, post_date, image_path, post_text, author,important)
                     VALUES (?,?,?,?,?,?)`;
-    let values = [postTitle, date, picName, postText, author, important];
+    let values = [title, date, imageName, postText, author, important];
     connection.query(q, values, function(err, result, fields) {
         console.log(err, result);
-
+        if (err) {
+            console.log(err);
+            let sendData = {
+                status_code: 0,
+                message: 'Ошибка добавления статьи!'
+            }
+            res.status(200).json(sendData);
+        }
+        else {
+            console.log(result);
+            let sendData = {
+                status_code: 1,
+                message: 'Статья успешно добавлена!'
+            }
+            res.status(200).json(sendData);
+            // res.status(200).redirect('/admin');
+        }
     })
+
+
+    // let postTitle = req.body.post_title;
+    // let postText = req.body.post_text;
+    // let author = req.body.author_id;
+    // let important = req.body.important;
+    // let picName = req.body.image;
+    // let rawDate = new Date()
+    // let date = rawDate.getFullYear() + '-' + (rawDate.getMonth() + 1) + '-' + rawDate.getDate();
+    //
+    // console.log(req.body, postTitle, postText, author, important, picName, date);
+    //
+    // let q = `INSERT INTO posts (title, post_date, image_path, post_text, author,important)
+    //                 VALUES (?,?,?,?,?,?)`;
+    // let values = [postTitle, date, picName, postText, author, important];
+    // connection.query(q, values, function(err, result, fields) {
+    //     console.log(err, result);
+    //
+    // })
 
 })
 
@@ -354,7 +404,7 @@ app.use(function(req, res, next) {
 const connection= mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    database: 'web_project',
+    database: 'node_webproj',
     password: '',
 });
 
