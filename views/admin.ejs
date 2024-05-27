@@ -38,7 +38,7 @@
                                         <%=posts[i].title%>
                                     </a>
                                 </h5>
-                                <p><%=posts[i].post_date%> | <a href='/admin/red/'>Изменить</a> | <a class='link-delete' data-id='<%=posts[i].id%>'>Удалить</a></p>
+                                <p><%=posts[i].post_date%> | <a href='/admin/red/<%=posts[i].id%>>'>Изменить</a> | <a class='link-delete' data-id='<%=posts[i].id%>'>Удалить</a></p>
                             </div>
                         </div>
                     <%}%>
@@ -48,7 +48,7 @@
                     <h4>Профиль</h4>
                     <div class='important row'>
                         <p>
-                            <%=stats[0].last_name%> <%=stats[0].first_name%> <br>
+                            <%=stats.last_name%> <%=stats[0].first_name%> <br>
                             Статей: <%=stats[0].cnt%> <br>
                             Дата последней статьи: <%=stats[0].latest_post%> <br>
                             <a href='/admin/create'><b>Добавить статью</b></a><br>

@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="/styles/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/header.css" type="text/css">
+    <link rel="stylesheet" href="/styles/admin_update.css" type="text/css">
+    <link rel="stylesheet" href="/styles/footer.css" type="text/css">
+    <script type="text/javascript" src="/jq.js"></script>
+    <script type="text/javascript" src="/admin_update.js"></script>
+    <title>Main</title>
+</head>
+
+<body>
+
+    <!-- ХЕДЕР -->
+    <%- include(header)%>
+
+    <!-- Основная часть сайта-->
+    <div class="main-fluid container-fluid">
+        <div class="main-container container">
+            <div class="content row">
+                <!-- часть с новостями-->
+                <div class="create col-8">
+                    <h4>Изменение статьи</h4>
+                    <form method="POST" action="" enctype="multipart/form-data">
+                        <div class='field-name row'>
+                            <input type="hidden" name="post-id" value="<%=post.id%>">
+                            <div class='left-part col-2'>
+                                <p>Название:</p>
+                            </div>
+                            <div class='input-part col-10'>
+                                <textarea name="post-title" class="post-title-input"><%=post.title%></textarea>
+                            </div>
+                        </div>
+                        <div class='field-name row'>
+                            <div class='left-part col-2'>
+                                <p>Картинка:</p>
+                            </div>
+                            <div class='input-part col-10'>
+                                <input type="file" name="pic-path" data-path="<%=post.image_path%>">
+                            </div>
+                        </div>
+                        <div class='field-name row'>
+                            <div class='left-part col-2'>
+                                <p>Статья важная?</p>
+                            </div>
+                            <div class='input-part col-10'>
+                                <input type="radio" class='post-input-radio' name='important' <% if (post.important == '1') {%> checked <%}%> value='1' >Да
+                                <input type="radio" class="post-input-radio" name='important' <% if (post.important == '0') {%> checked <%}%> value='0' >Нет
+                            </div>
+                        </div>
+                        <div class='field-name row'>
+                            <div class='left-part col-2'>
+                                <p>Текст:</p>
+                            </div>
+                            <div class='input-part col-10'>
+                                    <textarea class='post-text-input' name="post-text" ><%-post.post_text%>
+                                    </textarea>
+                            </div>
+                        </div>
+                        <div class='field-name row'>
+                            <div class="left-part col-2"></div>
+                            <div class="input-part col-10">
+                                <input type="hidden" name="author_id" value="<%=userId%>">
+                                <input type="hidden" name="post_id" value='<%=post.id%>'>
+                                <input class="post-submit" type="button" value="Изменить статью">
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <!-- ПОКАЗ СТАРЫХ И НОВЫХ ДАННЫХ ПОСЛЕ АПДЕЙТА-->
+                    <div class="hidden-div-ajax col-12" >
+                        <!-- TITLES -->
+                        <div class="old-title row">
+                            <div class="left-part col-2">
+                                <p>Старое название:</p>
+                            </div>
+                            <div class="input-part col-10">
+
+                            </div>
+                        </div>
+                        <div class="new-title row">
+                            <div class="left-part col-2">
+                                <p>Новое название:</p>
+                            </div>
+                            <div class="input-part col-10">
+
+                            </div>
+                        </div>
+
+                        <!-- IMAGES -->
+                        <div class="old-image row">
+                            <div class="left-part col-2">
+                                <p>Старая картинка:</p>
+                            </div>
+                            <div class="input-part col-10">
+                                <img src="">
+                            </div>
+                        </div>
+                        <div class="new-image row">
+                            <div class="left-part col-2">
+                                <p>Новая картинка:</p>
+                            </div>
+                            <div class="input-part col-10">
+                                <img src="">
+                            </div>
+                        </div>
+
+                        <!-- IMPORTANCE -->
+                        <div class="old-importance row">
+                            <div class="left-part col-2">
+                                <p>Старая важность:</p>
+                            </div>
+                            <div class="input-part col-10">
+
+                            </div>
+                        </div>
+                        <div class="new-importance row">
+                            <div class="left-part col-2">
+                                <p>Новая важность:</p>
+                            </div>
+                            <div class="input-part col-10">
+
+                            </div>
+                        </div>
+
+                        <!-- POST TEXT -->
+                        <div class="old-text row">
+                            <div class="left-part col-2">
+                                <p>Старый текст:</p>
+                            </div>
+                            <div class="input-part col-10">
+
+                            </div>
+                        </div>
+                        <div class="new-text row">
+                            <div class="left-part col-2">
+                                <p>Новый текст:</p>
+                            </div>
+                            <div class="input-part col-10">
+
+                            </div>
+                        </div>
+
+                        <a href="/admin"><button class="post-submit">Назад в админ-панель</button></a>
+                    </div>
+                </div>
+                <!-- профиль автора-->
+                <div class="content-important col-4">
+                    <h4>Профиль</h4>
+                    <div class='important row'>
+                        <p>
+                            <%=stats.last_name%> <%=stats.first_name%> <br>
+                            Статей: <%=stats.cnt%> <br>
+                            Дата последней статьи: <%=stats.latest_post%> <br>
+                            <a href='/admin/create'><b>Добавить статью</b></a><br>
+                            <% if (position == 'админ') {%>
+                                <a href='/admin/add_staff'><b>Добавить сотрудника</b></a>
+                            <%}%>
+                        </p>
+                    </div>
+                    <div class="important row" id="ajax-status">
+
+                    </div>
+                </div>
+                <div class="important row" id="ajax-status">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- ФУТЕР -->
+    <%- include(footer)%>
+
+</body>
+</html>

@@ -269,27 +269,87 @@ app.post('/admin/create', images.single('image'), function(req, res) {
             // res.status(200).redirect('/admin');
         }
     })
-
-
-    // let postTitle = req.body.post_title;
-    // let postText = req.body.post_text;
-    // let author = req.body.author_id;
-    // let important = req.body.important;
-    // let picName = req.body.image;
-    // let rawDate = new Date()
-    // let date = rawDate.getFullYear() + '-' + (rawDate.getMonth() + 1) + '-' + rawDate.getDate();
-    //
-    // console.log(req.body, postTitle, postText, author, important, picName, date);
-    //
-    // let q = `INSERT INTO posts (title, post_date, image_path, post_text, author,important)
-    //                 VALUES (?,?,?,?,?,?)`;
-    // let values = [postTitle, date, picName, postText, author, important];
-    // connection.query(q, values, function(err, result, fields) {
-    //     console.log(err, result);
-    //
-    // })
-
 })
+
+/* АДМИНКА - РЕДАКТИРОВАНИЕ СТАТЬИ */
+app.get('/admin/red/:id', function(req, res) {
+    if (!req.session.userId) {
+        res.redirect('/');
+    }
+    console.log('ЗАШЕЛ в /admin/red/:id');
+    console.log(`Сессия: ${req.session.userId}`);
+    let postId = req.params.id;
+    let q = `SELECT * FROM posts WHERE id =?`;
+    connection.query(q, [postId], function(err, post, fields) {
+        let statsQ = `SELECT COUNT(*) AS cnt,
+                                MAX(post_date) as latest_post,
+                                s.last_name, s.first_name
+                            FROM posts p
+                                JOIN staff s on p.author = s.id
+                            WHERE author=?`;
+        let authorId = req.session.userId;
+        connection.query(statsQ, [authorId], function(err, stats, fields) {
+            // console.log(post[0], stats);
+            let headerPath = path.join(__dirname, '/views/header.ejs');
+            let footerPath = path.join(__dirname, '/views/footer.ejs');
+            post[0].post_text = post[0].post_text.replace(/<p>/g, '').replace(/<\/p>/g, '\n');
+            let sendData = {
+                header: headerPath,
+                footer: footerPath,
+                userId: req.session.userId,
+                position: req.session.position,
+                post: post[0],
+                stats: stats[0]
+            };
+            // console.log(sendData);
+            res.status(200).render('admin_update.ejs', sendData);
+        })
+    })
+})
+app.post('/admin/red', images.single('image'), function (req, res) {
+    console.log('Зашел в POST /admin/red', req.session);
+    // console.log(req.body);
+    // console.log(req.file);
+
+    let postId = req.body.post_id;
+    let postTitle = req.body.post_title;
+    let image = req.file.originalname;
+    let postText = req.body.post_text;
+    let author = req.session.userId;
+    let important = req.body.important;
+    let rawDate = new Date();
+    let date = rawDate.getFullYear() + '-'
+        + ('0' + (rawDate.getMonth() + 1)).slice(-2) + '-'
+        + rawDate.getDate();
+
+    console.log(postId, postTitle, date, image, postText, author, important)
+    let q = `UPDATE posts SET title=?, post_date=?, image_path=?, post_text=?, author=?, important=? WHERE id=?`;
+    let values = [postTitle, date, image, postText, author, important, postId];
+    connection.query(q, values, function(err, result, fields) {
+        console.log(err, result);
+        if (err) {
+            console.log(err);
+            let sendData = {
+                status_code: 0,
+                message: 'Ошибка редактирования статьи!',
+                post_title: postTitle,
+                upd_time: date
+            }
+            res.status(200).json(sendData);
+        }
+        else {
+            console.log(result);
+            let sendData = {
+                status_code: 1,
+                message: 'Статья успешно отредактирована!',
+                post_title: postTitle,
+                upd_time: date
+            }
+            res.status(200).json(sendData);
+        }
+    })
+})
+
 
 
 
