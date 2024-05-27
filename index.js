@@ -411,6 +411,62 @@ app.delete('/admin/staff/delete/:id', function(req, res) {
     })
 })
 
+/* АДМИНКА СТАФФА - ДОБАВЛЕНИЕ */
+app.get('/admin/staff/add', function(req, res) {
+    if (!req.session.userId || req.session.position != 'админ') {
+        res.redirect('/admin');
+    }
+    let userId = req.session.userId;
+    let statsQ = `SELECT COUNT(*) AS cnt,
+                                MAX(post_date) as latest_post,
+                                s.last_name, s.first_name
+                        FROM posts p
+                            JOIN staff s on p.author = s.id
+                        WHERE author=?`;
+    connection.query(statsQ, [userId], function(err, stats, fields) {
+        console.log(stats);
+        let headerPath = path.join(__dirname, '/views/header.ejs');
+        let footerPath = path.join(__dirname, '/views/footer.ejs');
+        let sendData = {
+            header: headerPath,
+            footer: footerPath,
+            userId: req.session.userId,
+            position: req.session.position,
+            stats: stats[0]
+        }
+        res.status(200).render('admin_staff_add.ejs', sendData);
+    })
+})
+app.post('/admin/staff/add', urlParser, function(req, res) {
+    console.log('ЗАШЕЛ В POST /admin/staff/add ', req.session);
+    console.log(req.body);
+
+    let q = `INSERT INTO staff (last_name, first_name, login, password, email, position) VALUES (?,?,?,?,?,?)`;
+    let values = [req.body.last_name, req.body.first_name, req.body.login, req.body.password, req.body.email, req.body.position];
+    connection.query(q, values, function(err, result, fields) {
+        console.log(err, result, fields);
+
+        if (err) {
+            console.log(err);
+            let sendData = {
+                status_code: 0,
+                message: 'Ошибка добавления сотрудника!'
+            }
+            res.status(200).json(sendData);
+        }
+        else {
+            let sendData = {
+                status_code: 1,
+                message: 'Сотрудник успешно добавлен!'
+            }
+            res.status(200).json(sendData);
+        }
+    })
+    
+})
+
+
+
 
 /* ГЛАВНАЯ СТРАНИЦА */
 app.get('/', function(req, res) {

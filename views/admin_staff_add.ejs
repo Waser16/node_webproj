@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="/styles/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/header.css" type="text/css">
+    <link rel="stylesheet" href="/styles/admin_staff_add.css" type="text/css">
+    <link rel="stylesheet" href="/styles/footer.css" type="text/css">
+    <script type="text/javascript" src="/jq.js"></script>
+    <script type="text/javascript" src="/admin_staff_add.js"></script>
+    <title>Main</title>
+</head>
+
+<body>
+    <!-- ХЕДЕР -->
+    <%- include(header)%>
+
+    <!-- Основная часть сайта-->
+    <div class="main-fluid container-fluid">
+        <div class="main-container container">
+            <div class="content row">
+                <!-- часть с новостями-->
+                <div class="create col-8">
+                    <h4>Добавление сотрудника</h4>
+                    <form>
+                        <div class='field-name row'>
+                            <div class='left-part col-2'>
+                                <p>Фамилия:</p>
+                            </div>
+                            <div class='input-part col-10'>
+                                <input name="last-name" type="text" required></input>
+                            </div>
+                        </div>
+                        <div class='field-name row'>
+                            <div class='left-part col-2'>
+                                <p>Имя:</p>
+                            </div>
+                            <div class='input-part col-10'>
+                                <input type="text" name="first-name" required>
+                            </div>
+                        </div>
+                        <div class='field-name row'>
+                            <div class='left-part col-2'>
+                                <p>Логин:</p>
+                            </div>
+                            <div class='input-part col-10'>
+                                <input type="text" name="login" required>
+                            </div>
+                        </div>
+                        <div class='field-name row'>
+                            <div class='left-part col-2'>
+                                <p>Пароль:</p>
+                            </div>
+                            <div class='input-part col-10'>
+                                <input type="text" name="password" required>
+                            </div>
+                        </div>
+                        <div class='field-name row'>
+                            <div class='left-part col-2'>
+                                <p>Email:</p>
+                            </div>
+                            <div class='input-part col-10'>
+                                <input type="text" name="email" required>
+                            </div>
+                        </div>
+                        <div class='field-name row'>
+                            <div class='left-part col-2'>
+                                <p>Должность:</p>
+                            </div>
+                            <div class='input-part col-10'>
+                                <input type="text" name="position" required>
+                            </div>
+                        </div>
+                        <div class='field-name row'>
+                            <div class="left-part col-2"></div>
+                            <div class="input-part col-10">
+                                <input type="button" value="Добавить сотрудника">
+                            </div>
+                        </div>
+                    </form>
+                    <div class="hidden-div-ajax col-8" >
+                        <a href="admin_staff.php"><button class="post-submit">Назад в админ-панель</button></a>
+                    </div>
+                </div>
+                <!-- профиль автора-->
+                <div class="content-important col-4">
+                    <h4>Профиль</h4>
+                    <p>
+                        <%=stats.first_name%> <%=stats.last_name%> <br>
+                        Статей: <%=stats.cnt%> <br>
+                        Дата последней статьи: <%=stats.latets_post%> <br>
+<!--                        <a href='/admin/staff/add'><b>Добавить сотрудника</b></a>-->
+                    </p>
+                    <div class="important row" id="ajax-status">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ФООТЕР -->
+    <%- include(header)%>
+
+</body>
+</html>
