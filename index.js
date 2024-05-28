@@ -125,8 +125,7 @@ app.put('/register', urlParser, function(req, res) {
                 status_code: 200,
                 message: 'Регистрация прошла успешно!'
             }
-            res.redirect('/');
-            // res.status(200).json(sendData);
+            res.status(200).json(sendData);
         }
     })
 })
@@ -579,7 +578,49 @@ app.get('/', function(req, res) {
     })
 })
 
+/* ОБРАТНАЯ СВЯЗЬ */
+app.get('/feedback', function(req, res) {
+    console.log('ЗАШЕЛ В GET /feedback');
+    let headerPath = path.join(__dirname, '/views/header.ejs');
+    let footerPath = path.join(__dirname, '/views/footer.ejs');
+    let sendData = {
+        header: headerPath,
+        footer: footerPath,
+        userId: req.session.userId,
+        position: req.session.position,
+    }
+    res.status(200).render('feedback.ejs', sendData);
+})
+app.post('/feedback', urlParser, function(req, res) {
+    console.log('ЗАШЕЛ В POST /feedback');
+    // console.log(req.body);
+    let q = `INSERT INTO feedback (name, phone_number, email, content, msg_date)
+             VALUES (?, ?, ?, ?, ?)`;
+    let rawDate = new Date();
+    let dateTime = rawDate.getFullYear() + '-' + ('0' + rawDate.getMonth()).slice(-2) + '-'
+        + rawDate.getDate() + ' ' + rawDate.getHours() + ':' + rawDate.getMinutes();
+    let values = [req.body.name, req.body.phone_number, req.body.email, req.body.content, dateTime];
+    // console.log(values);
+    connection.query(q, values, function(err, result, fields) {
+        // console.log(err, result, fields);
+        if (err) {
+            console.log(err);
+            let sendData = {
+                status_code: 0,
+                message: 'Ошибка отправки сообщения!'
+            }
+            res.status(200).json(sendData);
 
+        }
+        else {
+            let sendData = {
+                status_code: 1,
+                message: 'Сообщение успешно отправлено!'
+            }
+            res.status(200).json(sendData);
+        }
+    })
+})
 
 
 

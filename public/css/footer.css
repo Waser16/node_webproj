@@ -15,6 +15,11 @@ footer {
     padding-top: 10px;
 }
 
+.footer-container h4 a {
+    color: wheat;
+    padding-top: 10px;
+}
+
 .footer-container p {
     color: wheat;
     margin: 10px 0;

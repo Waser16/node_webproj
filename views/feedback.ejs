@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="/styles/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/header.css" type="text/css">
+    <link rel="stylesheet" href="/styles/feedback.css" type="text/css">
+    <link rel="stylesheet" href="/styles/footer.css" type="text/css">
+    <script type="text/javascript" src="/jq.js"></script>
+    <script type="text/javascript" src="/feedback.js"></script>
+    <title>Регистрация</title>
+</head>
+
+<body>
+    <!-- ХЕДЕР -->
+    <%- include(header)%>
+
+    <!-- ОСНОВНАЯ ЧАСТЬ САЙТА -->
+    <div class="main-fluid container-fluid">
+        <div class="main-container container">
+            <div class="content row">
+
+                <div class="left-space col-4">
+                </div>
+
+                <div class="feedback-form-container col-4">
+                    <h4>Форма обратной связи</h4>
+
+                    <form class="registration-form">
+                        <label>Ваше имя:</label><br>
+                        <input class="register-input" name='name' type="text" placeholder="Иван Иванов" required><br>
+
+                        <label>Ваш номер телефона:</label><br>
+                        <input class="register-input" name='phone' type="text" placeholder="+79270899123" required><br>
+
+                        <label>Ваш email:</label><br>
+                        <input class="register-input" name='email' type="text" placeholder="example@mail.ru" required><br>
+
+                        <label>Ваше сообщение:</label><br>
+                        <textarea name="content" rows="20"></textarea><br>
+
+                        <input class="submit-input" type="button" value="Отправить">
+                    </form>
+                    <div class="ajax-status">
+
+                    </div>
+                </div>
+
+                <div class="right-space col-4">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ФУТЕР -->
+    <%- include(footer)%>
+
+</body>
+
+</html>

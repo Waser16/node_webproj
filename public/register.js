@@ -38,9 +38,10 @@ $(document).ready(function() {
                 if (data.status_code == 200) {
                     console.log(data);
                     let successMessage = `${data.message}`;
-                    $('form').remove();
-                    $('.ajax-status p').text(successMessage);
-                    $('#ajax-success-btn').show();
+                    window.location.assign('/');
+                    // $('form').remove();
+                    // $('.ajax-status p').text(successMessage);
+                    // $('#ajax-success-btn').show();
                 }
                 else {
                     let errorMessage = `<p>${data.message}</p>`;
