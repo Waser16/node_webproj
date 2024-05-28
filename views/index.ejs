@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="/styles/header.css" type="text/css">
     <link rel="stylesheet" href="/styles/index.css" type="text/css">
     <link rel="stylesheet" href="/styles/footer.css" type="text/css">
+    <script type="text/javascript" src="/jq.js"></script>
+    <script type="text/javascript" src="/index_filter.js"></script>
     <title>Main</title>
 </head>
 
@@ -28,7 +30,7 @@
                 <div class="content-post col-8">
                     <h4> Последние публикации</h4>
                     <% for(let i = 0; i < posts.length; i++) {%>
-                    <div class="post row">
+                    <div class="post row" <% if (i >= 10) {%> style='display: none' <%} %>>
                         <div class="post-image col-2">
                             <img class="mx-auto d-block" src="/photos/<%=posts[i].image_path%>">
                         </div>
@@ -38,7 +40,7 @@
                                     <%=posts[i].title%>
                                 </a>
                             </h5>
-                            <p><%=posts[i].first_name%> <%=posts[i].last_name%> | <%=posts[i].post_date%></p>
+                            <p><%=posts[i].first_name%> <%=posts[i].last_name%> | <span class="post_date"><%=posts[i].post_date%></span></p>
                         </div>
                     </div>
                     <%} %>
@@ -54,6 +56,13 @@
                     </a>
                 </div>
                 <%} %>
+                <hr>
+                <div class="filter-div">
+                    <a id="posts-yesterday">Новости за вчера</a><br>
+                    <a id="posts-last-week">Новости за последнюю неделю</a><br>
+                    <a id="posts-last-month">Новости за последний месяц</a><br>
+                    <a id="posts-all-time">Все новости</a>
+                </div>
             </div>
         </div>
     </div>

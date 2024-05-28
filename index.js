@@ -120,7 +120,7 @@ app.put('/register', urlParser, function(req, res) {
             }
             res.status(200).json(sendData);
         } else {
-            console.log(result);
+            // console.log(result);
             let sendData = {
                 status_code: 200,
                 message: 'Регистрация прошла успешно!'
@@ -559,7 +559,7 @@ app.get('/', function(req, res) {
                         FROM posts p
                         JOIN staff s on p.author = s.id
                         ORDER BY post_date DESC
-                        LIMIT 20`;
+                        `;
     connection.query(postsQ, function(err, posts, fields) {
         // console.log(posts);
         connection.query('SELECT * FROM `posts` WHERE important=1 ORDER BY `post_date` DESC LIMIT 3', function(err, importantPosts, fields) {
@@ -578,6 +578,7 @@ app.get('/', function(req, res) {
     })
 })
 
+
 /* ОБРАТНАЯ СВЯЗЬ */
 app.get('/feedback', function(req, res) {
     console.log('ЗАШЕЛ В GET /feedback');
@@ -593,14 +594,13 @@ app.get('/feedback', function(req, res) {
 })
 app.post('/feedback', urlParser, function(req, res) {
     console.log('ЗАШЕЛ В POST /feedback');
-    // console.log(req.body);
     let q = `INSERT INTO feedback (name, phone_number, email, content, msg_date)
              VALUES (?, ?, ?, ?, ?)`;
     let rawDate = new Date();
     let dateTime = rawDate.getFullYear() + '-' + ('0' + rawDate.getMonth()).slice(-2) + '-'
         + rawDate.getDate() + ' ' + rawDate.getHours() + ':' + rawDate.getMinutes();
     let values = [req.body.name, req.body.phone_number, req.body.email, req.body.content, dateTime];
-    // console.log(values);
+
     connection.query(q, values, function(err, result, fields) {
         // console.log(err, result, fields);
         if (err) {
