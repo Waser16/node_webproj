@@ -42,8 +42,9 @@ img {
 }
 
 .main-container {
-    margin-bottom: 50px;
+    padding-bottom: 50px;
     background-color: white;
+    min-height: 750px;
 }
 
 .content-post  h4 {
