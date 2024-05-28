@@ -544,6 +544,39 @@ app.put('/admin/staff/red/', urlParser, function(req, res) {
     })
 })
 
+/* АДМИНКА - ОБРАТНАЯ СВЯЗЬ*/
+app.get('/admin/feedback', function(req, res) {
+    console.log('ЗАШЕЛ В GET /admin/feedback');
+    if (!req.session.userId || req.session.position != 'админ') {
+        res.status(200).redirect('/admin');
+        return;
+    }
+    let userId = req.session.userId;
+    let statsQ = `SELECT COUNT(*) AS cnt,
+                         MAX(post_date) as latest_post,
+                         s.last_name, s.first_name
+                  FROM posts p
+                           JOIN staff s on p.author = s.id
+                  WHERE author=?`;
+    connection.query(statsQ, [userId], function(err, stats, fields) {
+        console.log(err, stats);
+        let fbQ = `SELECT * FROM feedback`;
+        connection.query(fbQ, function(err, feedback, fields) {
+            console.log(feedback);
+            let headerPath = path.join(__dirname, '/views/header.ejs');
+            let footerPath = path.join(__dirname, '/views/footer.ejs');
+            let sendData = {
+                header: headerPath,
+                footer: footerPath,
+                userId: req.session.userId,
+                position: req.session.position,
+                stats: stats[0],
+                feedback: feedback
+            }
+            res.status(200).render('admin_feedback.ejs', sendData);
+        })
+    })
+})
 
 
 
