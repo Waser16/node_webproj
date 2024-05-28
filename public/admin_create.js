@@ -40,14 +40,14 @@ $(document).ready( function () {
         console.log(postTitle, image, isImportant, postText);
 
         fetch('/admin/create', {
-            method: 'POST',
+            method: 'PUT',
             body: data
         }).then(response => response.json())
             .then(data => {
                 console.log(data);
                 if (data.status_code) {
                     let successHtml = `
-                        <p><u>Статус</u>: ${data.status}</p>
+                        <p><u>Статус</u>: ${data.message}</p>
                         <p><u>Название статьи</u>: ${data.post_title}</p>
                         <p><u>Дата добавления</u>: ${data.add_datetime}</p>
                         <p><u>Длина статьи</u>: ${data.post_len} символов</p>
@@ -58,7 +58,7 @@ $(document).ready( function () {
                 }
                 else {
                     let errHtml = `
-                        <p><u>Статус</u>: ${data.status}</p>
+                        <p><u>Статус</u>: ${data.message}</p>
                         <p><u>Название статьи</u>: ${data.post_title}</p>
                         <p><u>Дата попытки операции</u>: ${data.add_datetime}</p>
                     `;

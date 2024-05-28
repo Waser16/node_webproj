@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="/styles/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/header.css" type="text/css">
+    <link rel="stylesheet" href="/styles/admin_staff_update.css" type="text/css">
+    <link rel="stylesheet" href="/styles/footer.css" type="text/css">
+    <script type="text/javascript" src="/jq.js"></script>
+    <script type="text/javascript" src="/admin_staff_update.js"></script>
+    <title>Main</title>
+</head>
+
+<body>
+    <!-- ХЕДЕР -->
+    <%- include(header)%>
+
+    <!-- Основная часть сайта-->
+    <div class="main-fluid container-fluid">
+        <div class="main-container container">
+            <div class="content row">
+                <!-- часть с новостями-->
+                <div class="create col-8">
+                    <h4>Изменение данных сотрудника</h4>
+                    <form>
+                        <input type="hidden" name="staff-id" value="<%=staff.id%>">
+                        <div class='field-name row'>
+                            <div class='left-part col-2'>
+                                <p>Фамилия:</p>
+                            </div>
+                            <div class='input-part col-10'>
+                                <input name="last-name" type="text" value='<%=staff.last_name%>'>
+                            </div>
+                        </div>
+                        <div class='field-name row'>
+                            <div class='left-part col-2'>
+                                <p>Имя:</p>
+                            </div>
+                            <div class='input-part col-10'>
+                                <input type="text" name="first-name" value='<%=staff.first_name%>'>
+                            </div>
+                        </div>
+                        <div class='field-name row'>
+                            <div class='left-part col-2'>
+                                <p>Логин:</p>
+                            </div>
+                            <div class='input-part col-10'>
+                                <input type="text" name="login" value='<%=staff.login%>'>
+                            </div>
+                        </div>
+                        <div class='field-name row'>
+                            <div class='left-part col-2'>
+                                <p>Пароль:</p>
+                            </div>
+                            <div class='input-part col-10'>
+                                <input type="text" name="password" value='<%=staff.password%>'>
+                            </div>
+                        </div>
+                        <div class='field-name row'>
+                            <div class='left-part col-2'>
+                                <p>Email:</p>
+                            </div>
+                            <div class='input-part col-10'>
+                                <input type="text" name="email" value='<%=staff.email%>'>
+                            </div>
+                        </div>
+                        <div class='field-name row'>
+                            <div class='left-part col-2'>
+                                <p>Должность:</p>
+                            </div>
+                            <div class='input-part col-10'>
+                                <input type="text" name="position" value='<%=staff.position%>'>
+                            </div>
+                        </div>
+                        <div class='field-name row'>
+                            <div class="left-part col-2"></div>
+                            <div class="input-part col-10">
+                                <input type="hidden" name="id" value="<%=staff.id%>">
+                                <input class="post-submit" type="button" value="Обновить данные сотрудника">
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- СРАВНЕНИЕ ДАННЫХ АЯКС -->
+                    <div class="ajax-hidden-div col-12">
+                        <!-- ФАМИЛИИ -->
+                        <div class="old-last-name old row">
+                            <div class="left-part col-2">
+                                <p>Старая фамилия:</p>
+                            </div>
+                            <div class="input-part col-10">
+
+                            </div>
+                        </div>
+                        <div class="new-last-name new row">
+                            <div class="left-part col-2">
+                                <p>Новая фамилия:</p>
+                            </div>
+                            <div class="input-part col-10">
+
+                            </div>
+                        </div>
+
+                        <!-- ИМЯ -->
+                        <div class="old-first-name old row">
+                            <div class="left-part col-2">
+                                <p>Старое имя:</p>
+                            </div>
+                            <div class="input-part col-10">
+
+                            </div>
+                        </div>
+                        <div class="new-first-name new row">
+                            <div class="left-part col-2">
+                                <p>Новое имя:</p>
+                            </div>
+                            <div class="input-part col-10">
+
+                            </div>
+                        </div>
+                        <!-- ЛОГИН -->
+                        <div class="old-login old row">
+                            <div class="left-part col-2">
+                                <p>Старый логин:</p>
+                            </div>
+                            <div class="input-part col-10">
+
+                            </div>
+                        </div>
+                        <div class="new-login new row">
+                            <div class="left-part col-2">
+                                <p>Новый логин:</p>
+                            </div>
+                            <div class="input-part col-10">
+
+                            </div>
+                        </div>
+                        <!-- ПАРОЛЬ -->
+                        <div class="old-password old row">
+                            <div class="left-part col-2">
+                                <p>Старый пароль:</p>
+                            </div>
+                            <div class="input-part col-10">
+
+                            </div>
+                        </div>
+                        <div class="new-password new row">
+                            <div class="left-part col-2">
+                                <p>Новый пароль</p>
+                            </div>
+                            <div class="input-part col-10">
+
+                            </div>
+                        </div>
+                        <!-- ИМЕЙЛ -->
+                        <div class="old-email old row">
+                            <div class="left-part col-2">
+                                <p>Старое имя:</p>
+                            </div>
+                            <div class="input-part col-10">
+
+                            </div>
+                        </div>
+                        <div class="new-email new row">
+                            <div class="left-part col-2">
+                                <p>Новый Email:</p>
+                            </div>
+                            <div class="input-part col-10">
+
+                            </div>
+                        </div>
+                        <!-- ДОЛЖНОСТЬ -->
+                        <div class="old-position old row">
+                            <div class="left-part col-2">
+                                <p>Старая должность:</p>
+                            </div>
+                            <div class="input-part col-10">
+
+                            </div>
+                        </div>
+                        <div class="new-position new row">
+                            <div class="left-part col-2">
+                                <p>Новая должность:</p>
+                            </div>
+                            <div class="input-part col-10">
+
+                            </div>
+                        </div>
+
+                        <a href="admin_staff.php">
+                            <button class="post-submit">Назад в админ-панель сотрудников</button>
+                        </a>
+                    </div>
+                </div>
+                <!-- профиль автора-->
+                <div class="content-important col-4">
+                    <h4>Профиль</h4>
+                    <p>
+                        <%=stats.first_name%> <%=stats.last_name%> <br>
+                        Статей: <%=stats.cnt%> <br>
+                        Дата последней статьи: <%=stats.latets_post%> <br>
+<!--                        <a href='/admin/staff/add'><b>Добавить сотрудника</b></a>-->
+                    </p>
+                    <div class="important row" id="ajax-status">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+    <!-- ФУТЕР -->
+    <%- include(footer)%>
+
+</body>
+
+</html>

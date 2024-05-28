@@ -39,6 +39,7 @@ app.use(session({
 /* СТРАНИЦА АВТОРИЗАЦИИ */
 app.get('/auth', function(req, res) {
     // console.log(req.session);
+    console.log('ЗАШЕЛ в /auth');
     let headerPath = path.join(__dirname, '/views/header.ejs');
     let footerPath = path.join(__dirname, '/views/footer.ejs');
     let sendData = {
@@ -51,6 +52,7 @@ app.get('/auth', function(req, res) {
 });
 
 app.post('/auth/test', urlParser, function(req, res) {
+    console.log('ЗАШЕЛ в POST /auth/test');
     let email = req.body.email;
     let password =  req.body.password;
     let q = "SELECT * FROM `staff` WHERE `email`=? AND `password`=?";
@@ -58,7 +60,7 @@ app.post('/auth/test', urlParser, function(req, res) {
         if (result.length == 1) {
             req.session.userId = result[0].id;
             req.session.position = result[0].position;
-            console.log(req.session);
+            // console.log(req.session);
 
             let sendData = {
                 status_code: 1,
@@ -74,6 +76,7 @@ app.post('/auth/test', urlParser, function(req, res) {
 
 /* LOGOUT */
 app.get('/logout', function(req, res) {
+    console.log('ЗАШЕЛ в /logout');
     req.session.destroy(function(err) {
         if (err) {
             console.log(err);
@@ -86,6 +89,7 @@ app.get('/logout', function(req, res) {
 
 /* СТРАНИЦА РЕГИСТРАЦИИ */
 app.get('/register', function(req, res) {
+    console.log('ЗАШЕЛ в GET /register');
     let headerPath = path.join(__dirname, '/views/header.ejs');
     let footerPath = path.join(__dirname, '/views/footer.ejs');
     let sendData = {
@@ -98,12 +102,13 @@ app.get('/register', function(req, res) {
 });
 app.put('/register', urlParser, function(req, res) {
     // console.log(req.session);
+    console.log('ЗАШЕЛ в PUT /register');
     let first_name = req.body.first_name;
     let last_name = req.body.last_name;
     let email = req.body.email;
     let login = req.body.login;
     let password = req.body.password;
-    console.log(first_name, last_name, email, password, login);
+    // console.log(first_name, last_name, email, password, login);
     let q = "INSERT INTO `users` (`last_name`, `first_name`, `login`, `email`, `password`) VALUES (?,?,?,?,?)";
     let values = [last_name, first_name, login, email, password];
     connection.query(q, values, function(err, result, fields) {
@@ -131,6 +136,7 @@ app.put('/register', urlParser, function(req, res) {
 /* АДМИНКА - ГЛАВНАЯ СТРАНИЦА */
 app.get('/admin', function(req, res) {
     // console.log(req.session);
+    console.log('ЗАШЕЛ в GET /admin');
     if (!req.session.userId) {
         res.redirect('/');
     }
@@ -185,23 +191,25 @@ app.delete('/admin/delete/', urlParser, function(req, res) {
     let q = `DELETE FROM posts WHERE id =?`;
     connection.query(q, [id], function(err, result, fields) {
         if (err) {
-            console.log(err);
-            let rawTime = new Date();
-            let time = rawTime.getFullYear() + '-' + (rawTime.getMonth() + 1) + '-' + rawTime.getDate();
+            // console.log(err);
+            let rawDate = new Date();
+            let dateTime = rawDate.getFullYear() + '-' + ('0' + rawDate.getMonth()).slice(-2) + '-'
+                + rawDate.getDate() + ' ' + rawDate.getHours() + ':' + rawDate.getMinutes();
             let sendData = {
                 status_code: 0,
                 message: 'Ошибка удаления статьи!',
-                delete_time: time
+                delete_time: dateTime
             }
             res.status(200).json(sendData);
         } else {
             console.log(result);
-            let rawTime = new Date();
-            let time = rawTime.getFullYear() + '-' + (rawTime.getMonth() + 1) + '-' + rawTime.getDate();
+            let rawDate = new Date();
+            let dateTime = rawDate.getFullYear() + '-' + ('0' + rawDate.getMonth()).slice(-2) + '-'
+                + rawDate.getDate() + ' ' + rawDate.getHours() + ':' + rawDate.getMinutes();
             let sendData = {
                 status_code: 1,
                 message: 'Статья успешно удалена!',
-                delete_time: time
+                delete_time: dateTime
             }
             res.status(200).json(sendData);
             // res.status(200).redirect('/admin');
@@ -212,6 +220,7 @@ app.delete('/admin/delete/', urlParser, function(req, res) {
 
 /* АДМИНКА - ДОБАВЛЕНИЕ СТАТЬИ */
 app.get('/admin/create', urlParser, function(req, res) {
+    console.log('ЗАШЕЛ в GET /admin/create');
     let statsQ = `SELECT COUNT(*) AS cnt,
                                 MAX(post_date) as latest_post,
                                 s.last_name, s.first_name
@@ -232,8 +241,8 @@ app.get('/admin/create', urlParser, function(req, res) {
         res.status(200).render('admin_create.ejs', sendData);
     })
 })
-app.post('/admin/create', images.single('image'), function(req, res) {
-
+app.put('/admin/create', images.single('image'), function(req, res) {
+    console.log('ЗАШЕЛ в PUT /admin/create');
     // console.log(req.file);
     // console.log(req.body);
     let title = req.body.post_title;
@@ -245,14 +254,14 @@ app.post('/admin/create', images.single('image'), function(req, res) {
     let date = rawDate.getFullYear() + '-'
         + ('0' + (rawDate.getMonth() + 1)).slice(-2) + '-'
         + rawDate.getDate();
-    console.log(title, imageName, postText, author, important, date);
+    // console.log(title, imageName, postText, author, important, date);
     let q = `INSERT INTO posts (title, post_date, image_path, post_text, author,important)
                     VALUES (?,?,?,?,?,?)`;
     let values = [title, date, imageName, postText, author, important];
     connection.query(q, values, function(err, result, fields) {
-        console.log(err, result);
+        // console.log(err, result);
         if (err) {
-            console.log(err);
+            // console.log(err);
             let sendData = {
                 status_code: 0,
                 message: 'Ошибка добавления статьи!'
@@ -261,23 +270,29 @@ app.post('/admin/create', images.single('image'), function(req, res) {
         }
         else {
             console.log(result);
+            let dateTime = rawDate.getFullYear() + '-' + ('0' + rawDate.getMonth()).slice(-2) + '-'
+                + rawDate.getDate() + ' ' + rawDate.getHours() + ':' + rawDate.getMinutes();
+            let post_len = postText.length;
             let sendData = {
                 status_code: 1,
-                message: 'Статья успешно добавлена!'
+                message: 'Статья успешно добавлена!',
+                post_title: title,
+                add_datetime: dateTime,
+                post_len: post_len
             }
             res.status(200).json(sendData);
-            // res.status(200).redirect('/admin');
         }
     })
 })
 
 /* АДМИНКА - РЕДАКТИРОВАНИЕ СТАТЬИ */
 app.get('/admin/red/:id', function(req, res) {
+    console.log('ЗАШЕЛ в GET /admin/red/:id');
     if (!req.session.userId) {
         res.redirect('/');
     }
-    console.log('ЗАШЕЛ в /admin/red/:id');
-    console.log(`Сессия: ${req.session.userId}`);
+    // console.log('ЗАШЕЛ в /admin/red/:id');
+    // console.log(`Сессия: ${req.session.userId}`);
     let postId = req.params.id;
     let q = `SELECT * FROM posts WHERE id =?`;
     connection.query(q, [postId], function(err, post, fields) {
@@ -322,13 +337,13 @@ app.post('/admin/red', images.single('image'), function (req, res) {
         + ('0' + (rawDate.getMonth() + 1)).slice(-2) + '-'
         + rawDate.getDate();
 
-    console.log(postId, postTitle, date, image, postText, author, important)
+    // console.log(postId, postTitle, date, image, postText, author, important)
     let q = `UPDATE posts SET title=?, post_date=?, image_path=?, post_text=?, author=?, important=? WHERE id=?`;
     let values = [postTitle, date, image, postText, author, important, postId];
     connection.query(q, values, function(err, result, fields) {
-        console.log(err, result);
+        // console.log(err, result);
         if (err) {
-            console.log(err);
+            // console.log(err);
             let sendData = {
                 status_code: 0,
                 message: 'Ошибка редактирования статьи!',
@@ -338,7 +353,7 @@ app.post('/admin/red', images.single('image'), function (req, res) {
             res.status(200).json(sendData);
         }
         else {
-            console.log(result);
+            // console.log(result);
             let sendData = {
                 status_code: 1,
                 message: 'Статья успешно отредактирована!',
@@ -354,6 +369,7 @@ app.post('/admin/red', images.single('image'), function (req, res) {
 /* АДМИНКА СТАФФА - ГЛАНАЯ */
 app.get('/admin/staff', function(req, res) {
     // console.log(req.session);
+    console.log('ЗАШЕЛ в GET /admin/staff');
     if (!req.session.userId || req.session.position != 'админ') {
         res.redirect('/admin');
     }
@@ -388,12 +404,12 @@ app.get('/admin/staff', function(req, res) {
 app.delete('/admin/staff/delete/:id', function(req, res) {
     console.log('ЗАШЕЛ В DELETE /admin/staff/delete/:id');
     let staffId = req.params.id;
-    console.log(staffId);
+    // console.log(staffId);
     let q = `DELETE FROM staff WHERE id =?`;
     connection.query(q, [staffId], function(err, result, fields) {
-        console.log(err, result);
+        // console.log(err, result);
         if (err) {
-            console.log(err);
+            // console.log(err);
             let sendData = {
                 status_code: 0,
                 message: 'Ошибка удаления сотрудника!'
@@ -401,7 +417,7 @@ app.delete('/admin/staff/delete/:id', function(req, res) {
             res.status(200).json(sendData);
         }
         else {
-            console.log(result);
+            // console.log(result);
             let sendData = {
                 status_code: 1,
                 message: 'Сотрудник успешно удален!'
@@ -413,6 +429,7 @@ app.delete('/admin/staff/delete/:id', function(req, res) {
 
 /* АДМИНКА СТАФФА - ДОБАВЛЕНИЕ */
 app.get('/admin/staff/add', function(req, res) {
+    console.log('ЗАШЕЛ В GET /admin/staff/add');
     if (!req.session.userId || req.session.position != 'админ') {
         res.redirect('/admin');
     }
@@ -424,7 +441,7 @@ app.get('/admin/staff/add', function(req, res) {
                             JOIN staff s on p.author = s.id
                         WHERE author=?`;
     connection.query(statsQ, [userId], function(err, stats, fields) {
-        console.log(stats);
+        // console.log(stats);
         let headerPath = path.join(__dirname, '/views/header.ejs');
         let footerPath = path.join(__dirname, '/views/footer.ejs');
         let sendData = {
@@ -439,15 +456,15 @@ app.get('/admin/staff/add', function(req, res) {
 })
 app.post('/admin/staff/add', urlParser, function(req, res) {
     console.log('ЗАШЕЛ В POST /admin/staff/add ', req.session);
-    console.log(req.body);
+    // console.log(req.body);
 
     let q = `INSERT INTO staff (last_name, first_name, login, password, email, position) VALUES (?,?,?,?,?,?)`;
     let values = [req.body.last_name, req.body.first_name, req.body.login, req.body.password, req.body.email, req.body.position];
     connection.query(q, values, function(err, result, fields) {
-        console.log(err, result, fields);
+        // console.log(err, result, fields);
 
         if (err) {
-            console.log(err);
+            // console.log(err);
             let sendData = {
                 status_code: 0,
                 message: 'Ошибка добавления сотрудника!'
@@ -465,11 +482,76 @@ app.post('/admin/staff/add', urlParser, function(req, res) {
     
 })
 
+/* АДМИНКА СТАФФА - РЕДАКТИРОВАНИЕ */
+app.get('/admin/staff/red/:id', function(req, res) {
+    if (!req.session.userId || req.session.position != 'админ') {
+        res.status(200).redirect('/admin');
+    }
+
+    let staffId = req.params.id;
+    console.log('ЗАШЕЛ В GET /admin/staff/red/' + staffId);
+    let q = "SELECT * FROM staff WHERE id=?";
+    connection.query(q, [staffId], function(err, staff, fields) {
+        // console.log(err, staff);
+        let userId = req.session.userId;
+        let statsQ = `SELECT COUNT(*) AS cnt,
+                                MAX(post_date) as latest_post,
+                                s.last_name, s.first_name
+                        FROM posts p
+                            JOIN staff s on p.author = s.id
+                        WHERE author=?`;
+        connection.query(statsQ, [userId], function(err, stats, fields) {
+            // console.log(stats);
+            let headerPath = path.join(__dirname, '/views/header.ejs');
+            let footerPath = path.join(__dirname, '/views/footer.ejs');
+            let sendData = {
+                header: headerPath,
+                footer: footerPath,
+                userId: req.session.userId,
+                position: req.session.position,
+                staff: staff[0],
+                stats: stats[0]
+            }
+            res.status(200).render('admin_staff_update.ejs', sendData);
+        })
+    })
+
+})
+app.put('/admin/staff/red/', urlParser, function(req, res) {
+    console.log('ЗАШЕЛ В PUT /admin/staff/red/');
+    // console.log(req.body);
+    let staffId = req.body.staff_id;
+    let q = `UPDATE staff SET last_name=?, first_name=?, login=?, password=?, email=?, position=? WHERE id=?`;
+    let values = [req.body.last_name, req.body.first_name, req.body.login,
+        req.body.password, req.body.email, req.body.position, staffId];
+
+    connection.query(q, values, function(err, result, fields) {
+        // console.log(err, result, fields);
+        if (err) {
+            console.log(err);
+            let sendData = {
+                status_code: 0,
+                message: 'Ошибка редактирования сотрудника!'
+            }
+            res.status(200).json(sendData);
+        }
+        else {
+            let sendData = {
+                status_code: 1,
+                message: 'Сотрудник успешно отредактирован!'
+            }
+            res.status(200).json(sendData);
+        }
+    })
+})
+
+
 
 
 
 /* ГЛАВНАЯ СТРАНИЦА */
 app.get('/', function(req, res) {
+    console.log('ЗАШЕЛ В GET /');
     // console.log(req.session);
     let sendData = {};
     let postsQ = `SELECT p.image_path, p.id, p.title,
@@ -498,8 +580,12 @@ app.get('/', function(req, res) {
 })
 
 
+
+
+
 /* СТРАНИЦА ОТДЕЛЬНОЙ СТАТЬИ  */
 app.get('/post/:id', function(req, res) {
+    console.log('ЗАШЕЛ В GET /');
     let postId = req.params.id;
     // console.log(postId);
     let postQ = `SELECT p.image_path, p.id, p.title,
@@ -530,6 +616,7 @@ app.get('/post/:id', function(req, res) {
 
 /* КАЛЕНДАРЬ ЧЕМПИОНАТА */
 app.get('/calendar', function(req, res) {
+    console.log('ЗАШЕЛ В GET /calendar');
     // console.log(req.session, req.session.userId);
     let importantPostsQ = 'SELECT * FROM `posts` WHERE important=1 ORDER BY `post_date` DESC LIMIT 3';
     connection.query(importantPostsQ, function (err, importantPosts, fields) {
@@ -552,6 +639,7 @@ app.get('/calendar', function(req, res) {
 
 /* СОСТАВЫ КОМАНД */
 app.get('/teams', function(req, res) {
+    console.log('ЗАШЕЛ В GET /teams');
     let importantPostsQ = 'SELECT * FROM `posts` WHERE important=1 ORDER BY `post_date` DESC LIMIT 3';
     connection.query(importantPostsQ, function (err, importantPosts, fields) {
         // console.log(post);
