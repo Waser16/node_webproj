@@ -17,6 +17,8 @@ $(document).ready(function() {
                 $(this).show();
             }
         })
+
+        $('#posts-header').text('Новости за последний день');
     })
 
     $('#posts-last-week').click(function() {
@@ -34,6 +36,7 @@ $(document).ready(function() {
                 $(this).show()
             }
         })
+        $('#posts-header').text('Новости за последнюю неделю');
     })
 
     $('#posts-last-month').click(function() {
@@ -52,16 +55,16 @@ $(document).ready(function() {
                 $(this).show()
             }
         })
+        $('#posts-header').text('Новости за последний месяц');
     })
 
     $('#posts-all-time').click(function() {
         console.log('posts-last-month clicked');
-        let posts = $(document).find('.post');
-
         $('.post').each(function() {
 
             $(this).show()
         })
+        $('#posts-header').text('Новости за все время');
     })
 
     function generateFilterDate(offset) {
@@ -73,4 +76,23 @@ $(document).ready(function() {
 
         return filterDate;
     }
+
+    $('.hide-about').click(function() {
+        console.log('hide-about clicked');
+        let parentDiv = $(this).parent().parent();
+        let p = parentDiv.find('#about-info');
+        let span = parentDiv.find('.hide-about');
+        console.log(parentDiv);
+        if (p.data('state') == '0') {
+            p.data('state', '1');
+            p.show();
+            span.text('Скрыть');
+        }
+        else {
+            p.data('state', '0');
+            p.hide();
+            span.text('Раскрыть');
+        }
+    })
+
 })

@@ -28,7 +28,7 @@
 
                 <!-- ЧАСТЬ С НОВОСТЯМИ-->
                 <div class="content-post col-8">
-                    <h4> Последние публикации</h4>
+                    <h4 id="posts-header"> Последние публикации</h4>
                     <% for(let i = 0; i < posts.length; i++) {%>
                     <div class="post row" <% if (i >= 10) {%> style='display: none' <%} %>>
                         <div class="post-image col-2">
@@ -48,7 +48,7 @@
 
             <!-- ВАЖНЫЕ НОВОСТИ-->
             <div class="content-important col-4">
-                <h4>Важные новости</h4>
+                <h4 id="important-posts-header">Важные новости</h4>
                 <% for (let i = 0; i < importantPosts.length; i++) {%>
                 <div class="important row">
                     <a href="post/<%=importantPosts[i].id%>">
@@ -57,11 +57,21 @@
                 </div>
                 <%} %>
                 <hr>
+
                 <div class="filter-div">
                     <a id="posts-yesterday">Новости за вчера</a><br>
                     <a id="posts-last-week">Новости за последнюю неделю</a><br>
                     <a id="posts-last-month">Новости за последний месяц</a><br>
                     <a id="posts-all-time">Все новости</a>
+                </div>
+
+                <div class="about">
+                    <h4>О сайте <span class="hide-about"> раскрыть </span> </h4>
+                    <p id="about-info" data-state="0">
+                        Данный сайт посвящен тематике автоспорта. Здесь можно найти актуальные новости
+                        о различных гоночных серях и событиях, происходящих в них.
+                        Сделан студентом БСБО-10-21 Галиуллиным Артур
+                    </p>
                 </div>
             </div>
         </div>

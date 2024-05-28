@@ -86,3 +86,30 @@ img {
 .important a {
     padding: 0 10px;
 }
+
+/*
+    Фильтрация
+ */
+
+.filter-div a {
+    cursor: pointer;
+}
+
+
+/*
+    ЧАСТЬ О ПРОЕКТЕ
+*/
+
+.about h4 {
+    justify-content: center;
+}
+
+.about h4 span {
+    text-decoration: none;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.about p {
+    display: none;
+}
